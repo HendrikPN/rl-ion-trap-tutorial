@@ -23,7 +23,7 @@ class QuditQM(object):
 
     def ket(self, i):
         """
-        Basis vector |i>=(0,...,0,1,0,...,0).
+        Basis vector |i> = (0,...,0,1,0,...,0).
 
         Args:
             i (int): Index of basis vector.
@@ -38,7 +38,7 @@ class QuditQM(object):
 
     def bra(self, i):
         """
-        Basis vector <i|=(0,...,0,1,0,...,0)^T.
+        Basis vector <i| = (0,...,0,1,0,...,0)^T.
 
         Args:
             i (int): Index of basis vector.
@@ -46,7 +46,7 @@ class QuditQM(object):
         Returns:
             vec (np.ndarray): Vector form of <i| as (1,d)-dimensional array.
         """
-        vec = self.ket(i).T
+        vec = self.ket(i).conj().T
 
         return vec
 
