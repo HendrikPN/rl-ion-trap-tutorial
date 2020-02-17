@@ -2,7 +2,12 @@
 
 This tutorial teaches you to build your own physics-inspired reinforcement 
 learning (RL) environment featuring simulations of a few ions manipulated by 
-laser pulses.
+laser pulses. 
+
+We consider a standardized setting which can be summarized with some pseudo code 
+integrated in the standard picture for the RL paradigm:
+
+![RL Paradigm Code](images/agent-env-code.png)
 
 ## Get Started
 
