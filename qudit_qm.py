@@ -68,6 +68,10 @@ class QuditQM(object):
         """
         Creation operator S_{+} as defined in Eq. (5) for odd dimensions.
 
+        .. math::
+            S_{+} = \sum_{l=-s}^{s-1}\sqrt{s(s+1)-l(l+1)}
+            |l+s+1\rangle\langle{l+s}|
+
         Returns:
             creation (np.ndarray): Creation operator of given dimension.
         """
@@ -85,6 +89,10 @@ class QuditQM(object):
     def annihilation(self):
         """
         Annihilation operator S_{-} as defined in Eq. (5) for odd dimensions.
+
+        .. math::
+            S_{-} = \sum_{l=-s}^{s-1}\sqrt{s(s+1)-l(l+1)}
+            |l+s\rangle\langle{l+s+1}|
 
         Returns:
             annihilation (np.ndarray): Annihilation operator of given dimension.

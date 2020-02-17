@@ -40,6 +40,10 @@ class LaserGates(QuditQM):
         """
         Single-ion laser pulse of the form Eq. (2) in 
         https://arxiv.org/pdf/1907.08569.pdf.
+
+        .. math::
+            G(j,k;\theta,\phi) = \exp(i\theta(e^{i\phi}|j\rangle\langle k| +
+            e^{-i\phi}|k\rangle\langle j|))
         
         NOTE: According to the paper only nearest neighbor transitions 
         k = j+1 are practically implementable.
@@ -89,6 +93,13 @@ class LaserGates(QuditQM):
         Molmer-Sorensen (MS) gate from Eq. (6) of 
         https://arxiv.org/pdf/1907.08569.pdf.
         This is a global laser beam that can entangle all ions.
+
+        .. math::
+            U_{\mathrm{MS}}(\theta_0) = \exp\left(i\theta_0\left(\sum_{i=1}^N 
+            S_{x,i}\right)^2\right)
+            S_{x} = (S_{+} + S_{-})/2
+        
+        where S_{+} and S_{-} are creation and annihilation operators.
 
         Args:
             theta (float): The MS phase (depending on the Rabi frequency).

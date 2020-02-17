@@ -5,6 +5,13 @@ class PSAgent(object):
         """
         Simple, 2-layered projective simulation (PS) agent.
 
+        We initialize an h-matrix with a single row of `num_actions` entries
+        corresponding to a dummy percept clip being connected to all possible
+        actions with h-values of all 1.
+
+        We initialize a g-matrix with a single row of `num_actions` entries with
+        all 0s corresponding to the *glow* values of percept-action transitions.
+
         Args:
             num_actions (int): The number of available actions.
             glow (float, optional): The glow (or eta) parameter. Defaults to 0.1
@@ -13,8 +20,8 @@ class PSAgent(object):
             softmax (float, optional): The softmax (or beta) parameter. 
                                        Defaults to 0.1.                
 
-        NOTE: This simple version misses some features such as clip deletion
-              or emotion tags.
+        NOTE: This simple version misses some features such as clip deletion,
+              emotion tags or generalization mechanisms.
         """
         self.num_actions = num_actions
         self.glow = glow
@@ -27,7 +34,7 @@ class PSAgent(object):
         #np.ndarray: g-matrix with current glow values. Defaults to all 0.
         self.gmatrix = np.zeros([1,self.num_actions])
         #dict: Dictionary of percepts as {"percept": index}
-        self.percepts={}
+        self.percepts = {}
         
     def predict(self, observation):
         """
@@ -72,7 +79,7 @@ class PSAgent(object):
         action = np.random.choice(range(self.num_actions), p=prob)
         
         # (4) update g-matrix
-        self.gmatrix[int(percept_index),int(action)] = 1
+        self.gmatrix[int(percept_index),int(action)] = 1.
 
         return action
 
@@ -81,15 +88,21 @@ class PSAgent(object):
         Given a reward, updates h-matrix. 
         Updates g-matrix with glow.
 
+        The h- and g-matrices are updated according to
+
+        .. math::
+            h^{(t+1)} = h^{(t)}-\gamma(h^{(t)}-1)+\lambda g^{(t)}\\
+            g^{(t+1)} = (1-\eta)g^{(t)}
+
         Args:
             reward (float): The received reward.
         """
         # damping h-matrix
-        self.hmatrix=self.hmatrix - self.damp*(self.hmatrix-1.)
+        self.hmatrix = self.hmatrix - self.damp*(self.hmatrix-1.)
         # update h-matrix
-        self.hmatrix+=reward*self.gmatrix
+        self.hmatrix += reward*self.gmatrix
         # update g-matrix
-        self.gmatrix=(1-self.glow)*self.gmatrix
+        self.gmatrix = (1-self.glow)*self.gmatrix
     
     # ----------------- helper methods -----------------------------------------
 
@@ -97,7 +110,7 @@ class PSAgent(object):
         """
         Given an observation, returns a percept.
         This function is just to emphasize the difference between observations
-        issued by the environment and percepts, which describes the observation
+        issued by the environment and percepts which describe the observations
         as perceived by the agent.
 
         Args:
