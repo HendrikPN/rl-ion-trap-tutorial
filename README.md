@@ -7,7 +7,7 @@ laser pulses.
 We consider a standardized setting which can be summarized with some pseudo code 
 integrated in the standard picture for the RL paradigm:
 
-![RL Paradigm Code](images/agent-env-code.png)
+<img src="images/agent-env-code.png" alt="rl-code" width="400"/>
 
 ## Get Started
 
