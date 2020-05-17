@@ -1,6 +1,7 @@
 import numpy as np
 from functools import reduce
 from itertools import product
+from copy import deepcopy
 
 class QuditQM(object):
     def __init__(self, dim, num_ions):
@@ -133,7 +134,7 @@ class QuditQM(object):
         # perform contraction <i_1,..,i_k|\rho|i_1,...,i_k> for all bases
         for d_vec in product(range(self.dim), repeat=len(args)):
             # fix basis state |i_1,...,i_k>
-            contractor = basis
+            contractor = deepcopy(basis)
             for n, ion in enumerate(args):
                 contractor[ion][d_vec[n]] = 1.
             contractor = reduce(np.kron, contractor)
