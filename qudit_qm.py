@@ -162,9 +162,8 @@ class QuditQM(object):
         srv = []
         # calculate SR for all single-qudit marginals
         for i in range(self.num_ions):
-            # perform partial trace over all but one ion
-            traced = ions - set([i])
-            reduced_rho = self.partial_tr(rho, *traced)
+            # perform partial trace over the respective ion
+            reduced_rho = self.partial_tr(rho, i)
             # calculate rank of reduce density matrix
             rank = np.linalg.matrix_rank(reduced_rho)
             # add to SRV
